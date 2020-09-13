@@ -91,12 +91,12 @@ function rf_analysis() {
     )
     .then(response => response.json())
     .then(data => {
-        promptDisp.textContent = "Our prediction shows that you have " + data.rf_prediction + " potential to get lung cancer.";
+        promptDisp.innerHTML = "Our prediction shows that you have <i style='color: blue;'>" + data.rf_prediction + "</i> potential to get lung cancer.";
         setTimeout(() => {
             promptDisp.textContent = "Upload your CT scan to get a better prediction.";
             dropArea.style.display = "block";
             wait4ImageUpload();
-        }, 6000);
+        }, 10000);
     });
 }
 
@@ -208,6 +208,6 @@ function dispCNNAnalysis(res) {
     // promptDisp.style.fontSize = "10px";
     // promptDisp.innerHTML = ;
     alert("We have your CT scan undergone our CNN neural network; and the result shows that" + 
-                            "you have <span style='color: red;'>" + res.cancer + "%</span> chance of having cancer, " +
-                            "and <span style='color: blue;'>" + res.no_cancer + "%</span> of not having cancer.");
+                            "you have " + res.cancer + "% chance of having cancer, " +
+                            "and " + res.no_cancer + "% of not having cancer.");
 }

@@ -6,12 +6,14 @@ import pickle
 from flask_cors import cross_origin
 import numpy as np
 # from tensorflow.keras.models import load_model
+import random
 
 # init app
 app = Flask(__name__)
 
 RF_PATH = r"E:/programming/Python/Current/final-project/nn/rand_forest.dat"
-CNN_PATH = r"E:/programming/Python/Current/final-project/nn/model.h5"
+# CNN_PATH = r"E:/programming/Python/Current/final-project/nn/model.h5"
+IMG_SAVE_PATH = r"E:/programming/Python/Current/final-project/data/"
 
 # setup neural networks
 rf = pickle.load(open(RF_PATH, "rb"))
@@ -38,6 +40,16 @@ def get_cnn_prediction():
     """Route for getting prediction by CNN. Function returns
     formatted json file on success; returns empty json file otherwise.
     """
+    print(request.files)
+    image_file = request.files.get("file", "")
+    filename = "ct-{}".format(random.randint(0, 999))
+    image_file.save(os.path.join(IMG_SAVE_PATH, filename))
+
+    res = cnn_predict(IMG_SAVE_PATH + filename)
+
+    return jsonify({"cancer": "89", "no_cancer": "11"})
+
+def cnn_predict(img_path):
     pass
 
 def compute_X(data):

@@ -28,7 +28,7 @@ function updateText(evt) {
     if (evt.keyCode == 13) {
         if (questionIdx >= questions.length) {
             document.removeEventListener("keydown", updateText, true);
-            promptDisp.textContent = "Now we've gethered your information.\nPlease wait for a moment for your assessment."
+            promptDisp.textContent = "Now we've gethered your information.\nPlease wait for a moment for your assessment.";
             setTimeout(() => {
                 rf_analysis();
             }, 3000);
@@ -189,7 +189,9 @@ function wait4ImageUpload() {
 
         xhr.addEventListener('readystatechange', function(e) {
             if (xhr.readyState == 4 && xhr.status == 200) {
-            updateProgress(i, 100); // <- Add this
+                updateProgress(i, 100); // <- Add this
+                // receive response on state change
+                dispCNNAnalysis(JSON.parse(this.responseText));
             }
             else if (xhr.readyState == 4 && xhr.status != 200) {
                 alert("error: fail to upload image");
@@ -202,6 +204,10 @@ function wait4ImageUpload() {
     }
 }
 
-function cnn_analysis() {
-
+function dispCNNAnalysis(res) {
+    // promptDisp.style.fontSize = "10px";
+    // promptDisp.innerHTML = ;
+    alert("We have your CT scan undergone our CNN neural network; and the result shows that" + 
+                            "you have <span style='color: red;'>" + res.cancer + "%</span> chance of having cancer, " +
+                            "and <span style='color: blue;'>" + res.no_cancer + "%</span> of not having cancer.");
 }
